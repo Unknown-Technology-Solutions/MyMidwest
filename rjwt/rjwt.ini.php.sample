@@ -1,8 +1,11 @@
 ;<?php die(); ?>
 ; RJWT Configuration Example
 
-[JWT_Payload_Array]
-serverIP = 0.0.0.0
+[RADIUS_Info]
+serverIP = "SERVER IP"
 secret = "SERVER_SECRET"
 nasIPID = "NAS ID ADDRESS"
 nasID = "NAS ID"
+
+[JWT_Info]
+keyFile = "authControlStorage/jwt_auth.key"
