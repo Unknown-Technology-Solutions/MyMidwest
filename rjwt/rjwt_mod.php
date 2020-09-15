@@ -17,8 +17,9 @@ session_start();
 require_once 'jwt/autoload.php';
 use \Firebase\JWT\JWT;
 
-function VerifyJWT($token, $keyFile)
+function VerifyJWT($token, $configLocation)
 {
+    $rjwtConfig = parse_ini_file($configLocation); //Config File location
     $file = fopen($keyFile, "r") or die("Unable to read key file!");
     $ServerKey = fread($file, filesize($keyFile));
     fclose($file);
@@ -57,7 +58,7 @@ function VerifyJWT($token, $keyFile)
 require_once 'radius/autoload.php';
 use Dapphp\Radius\Radius;
 
-function rjwtAuth($username, $password, $configLocation, $ServerKey) #, $server, $secret, $nasIP, $nasID)
+function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $nasIP, $nasID)
 {
 
   date_default_timezone_set("America/Chicago");
