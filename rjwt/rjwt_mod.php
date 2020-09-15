@@ -10,16 +10,17 @@ function protect($string)
   return $string;
 }
 
+session_start();
 
 #JWT Verify Function
 
 require_once 'jwt/autoload.php';
 use \Firebase\JWT\JWT;
 
-function VerifyJWT($token)
+function VerifyJWT($token, $keyFile)
 {
-    $file = fopen("jwt_auth.key", "r") or die("Unable to read key file!");
-    $ServerKey = fread($file, filesize("jwt_auth.key"));
+    $file = fopen($keyFile, "r") or die("Unable to read key file!");
+    $ServerKey = fread($file, filesize($keyFile));
     fclose($file);
     try {
         date_default_timezone_set("America/Chicago");
@@ -48,4 +49,30 @@ function VerifyJWT($token)
             return false;
         }
     }
+}
+
+
+#RADIUS Auth function
+
+require_once 'radius/autoload.php';
+use Dapphp\Radius\Radius;
+
+function radiusAuth($username, $password, $server, $secret, $nasIP, $nasID)
+{
+  // set server, secret, and basic attributes
+  $client->setServer($server) // RADIUS server address
+   ->setSecret($secret) // Server Secret
+   ->setNasIpAddress($nasIP) // NAS server address
+   ->setAttribute(32, $nasID);  // NAS identifier
+
+  // PAP authentication; returns true if successful, false otherwise
+  $authenticated = $client->accessRequest($username, $password);
+
+  if ($authenticated === false) {
+    return false
+  } else {
+    $token = JWT::encode($JWT_Payload_Array, $ServerKey);
+    $_SESSION['jwt_token'] = $token;
+    return true
+  }
 }
