@@ -11,7 +11,7 @@ if (isset($_SESSION['jwt_token'])) {
   if (VerifyJWT($_SESSION['jwt_token']) == true) {
     header("Location: ./home.php");
   } else {
-    return false
+    return false;
   }
 } else {
   #header("Location: ./index.php");
@@ -43,7 +43,7 @@ if (isset($_POST['Submit'])) {
     if (!$username || !$password) {
         print($alert1);
     } else {
-      $authenticated = rjwtAuth($username, $password, "rjwt.ini.php")
+      $authenticated = rjwtAuth($username, $password, "rjwt.ini.php");
         if ($authenticated === false) {
             // false returned on failure
             print("<script>alert('Failed Login Attempt')</script>");

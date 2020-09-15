@@ -75,7 +75,7 @@ function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $n
   $authenticated = $client->accessRequest($username, $password);
 
   if ($authenticated === false) {
-    return false
+    return false;
   } else {
 
     $JWT_Payload_Array = array();
@@ -86,6 +86,6 @@ function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $n
     $token = JWT::encode($JWT_Payload_Array, $ServerKey);
     $_SESSION['jwt_token'] = $token;
 
-    return true
+    return true;
   }
 }
