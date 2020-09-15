@@ -1,9 +1,5 @@
 <?php
 session_start();
-#require_once 'radius/autoload.php';
-#use Dapphp\Radius\Radius;
-#require_once 'jwt/autoload.php';
-#use \Firebase\JWT\JWT;
 
 require_once 'rjwt_mod.php';
 
