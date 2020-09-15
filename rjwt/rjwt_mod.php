@@ -10,7 +10,6 @@ function protect($string)
   return $string;
 }
 
-session_start();
 
 #JWT Verify Function
 
