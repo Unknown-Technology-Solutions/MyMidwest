@@ -1,8 +1,5 @@
 ;<?php die(); ?>
 ; RJWT Configuration Example
-;$JWT_Payload_Array['username'] = $username;
-;$JWT_Payload_Array['authenticated'] = $authenticated;
-;$JWT_Payload_Array['nbf'] = $nbf;
 
 [JWT_Payload_Array]
 serverIP = 0.0.0.0
