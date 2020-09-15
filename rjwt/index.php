@@ -10,7 +10,6 @@ if (isset($_SESSION['jwt_token'])) {
     return false;
   }
 } else {
-  #header("Location: ./index.php");
   echo "Token Invalid<br>";
 }
 ?>
