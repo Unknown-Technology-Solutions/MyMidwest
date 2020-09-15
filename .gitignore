@@ -1,6 +1,7 @@
 #stuff added
 *.key
 *.pub
+*.ini.php
 
 
 
