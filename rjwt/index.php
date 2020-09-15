@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once 'radius/autoload.php';
-use Dapphp\Radius\Radius;
-require_once 'jwt/autoload.php';
-use \Firebase\JWT\JWT;
+#require_once 'radius/autoload.php';
+#use Dapphp\Radius\Radius;
+#require_once 'jwt/autoload.php';
+#use \Firebase\JWT\JWT;
 
 require_once 'rjwt_mod.php';
 
 if (isset($_SESSION['jwt_token'])) {
-  if (VerifyJWT($_SESSION['jwt_token']) == true) {
+  if (VerifyJWT($_SESSION['jwt_token'], "./rjwt.ini.php") == true) {
     header("Location: ./home.php");
   } else {
     return false;
@@ -43,7 +43,7 @@ if (isset($_POST['Submit'])) {
     if (!$username || !$password) {
         print($alert1);
     } else {
-      $authenticated = rjwtAuth($username, $password, "rjwt.ini.php");
+      $authenticated = rjwtAuth($username, $password, "./rjwt.ini.php");
         if ($authenticated === false) {
             // false returned on failure
             print("<script>alert('Failed Login Attempt')</script>");
