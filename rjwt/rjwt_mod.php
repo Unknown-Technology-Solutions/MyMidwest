@@ -57,13 +57,14 @@ function VerifyJWT($token, $keyFile)
 require_once 'radius/autoload.php';
 use Dapphp\Radius\Radius;
 
-function radiusAuth($username, $password, $server, $secret, $nasIP, $nasID)
+function radiusAuth($username, $password, $configLocation) #, $server, $secret, $nasIP, $nasID)
 {
   // set server, secret, and basic attributes
-  $client->setServer($server) // RADIUS server address
-   ->setSecret($secret) // Server Secret
-   ->setNasIpAddress($nasIP) // NAS server address
-   ->setAttribute(32, $nasID);  // NAS identifier
+  $rjwtConfig = parse_ini_file($configLocation)
+  $client->setServer($rjwtConfig['serverIP']) // RADIUS server address
+   ->setSecret($rjwtConfig['secret']) // Server Secret
+   ->setNasIpAddress($rjwtConfig['nasIPID']) // NAS server address
+   ->setAttribute(32, $rjwtConfig['nasID']);  // NAS identifier
 
   // PAP authentication; returns true if successful, false otherwise
   $authenticated = $client->accessRequest($username, $password);
