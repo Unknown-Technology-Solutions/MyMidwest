@@ -11,6 +11,7 @@ function protect($string)
 }
 
 
+
 #JWT Verify Function
 
 require_once 'jwt/autoload.php';
@@ -19,8 +20,8 @@ use \Firebase\JWT\JWT;
 function VerifyJWT($token, $configLocation)
 {
     $rjwtConfig = parse_ini_file($configLocation); //Config File location
-    $file = fopen($keyFile, "r") or die("Unable to read key file!");
-    $ServerKey = fread($file, filesize($keyFile));
+    $file = fopen($rjwtConfig['keyFile'], "r") or die("Unable to read key file!");
+    $ServerKey = fread($file, filesize($rjwtConfig['keyFile']));
     fclose($file);
     try {
         date_default_timezone_set("America/Chicago");
@@ -54,7 +55,7 @@ function VerifyJWT($token, $configLocation)
 
 #RADIUS Auth function
 
-require_once 'radius/autoload.php';
+require_once './radius/autoload.php';
 use Dapphp\Radius\Radius;
 
 function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $nasIP, $nasID)
@@ -65,10 +66,11 @@ function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $n
 
   // set server, secret, and basic attributes
   $rjwtConfig = parse_ini_file($configLocation); //Config File location
-  $client->setServer($rjwtConfig['serverIP']) // RADIUS server address
-   ->setSecret($rjwtConfig['secret']) // Server Secret
-   ->setNasIpAddress($rjwtConfig['nasIPID']) // NAS server address
-   ->setAttribute(32, $rjwtConfig['nasID']);  // NAS identifier
+  $client = new Radius();
+  $client->setServer($rjwtConfig["serverIP"]) // RADIUS server address
+   ->setSecret($rjwtConfig["secret"]) // Server Secret
+   ->setNasIpAddress($rjwtConfig["nasIPID"]) // NAS server address
+   ->setAttribute(32, $rjwtConfig["nasID"]);  // NAS identifier
 
   // PAP authentication; returns true if successful, false otherwise
   $authenticated = $client->accessRequest($username, $password);
@@ -81,6 +83,10 @@ function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $n
     $JWT_Payload_Array['username'] = $username;
     $JWT_Payload_Array['authenticated'] = $authenticated;
     $JWT_Payload_Array['nbf'] = $nbf;
+
+    $file = fopen($rjwtConfig['keyFile'], "r") or die("Unable to read key file!");
+    $ServerKey = fread($file, filesize($rjwtConfig['keyFile']));
+    fclose($file);
 
     $token = JWT::encode($JWT_Payload_Array, $ServerKey);
     $_SESSION['jwt_token'] = $token;
