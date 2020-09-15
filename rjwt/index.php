@@ -47,7 +47,6 @@ if (isset($_POST['Submit'])) {
         if ($authenticated === false) {
             // false returned on failure
             print("<script>alert('Failed Login Attempt')</script>");
-//            echo sprintf("Access-Request failed with error %d (%s).\n", $client->getErrorCode(), $client->getErrorMessage());
         } else {
             // access request was accepted - client authenticated successfully
             echo "Success! Proceeding.\n";

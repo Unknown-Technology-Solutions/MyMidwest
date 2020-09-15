@@ -76,6 +76,7 @@ function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $n
   $authenticated = $client->accessRequest($username, $password);
 
   if ($authenticated === false) {
+    echo sprintf("Access-Request failed with error %d (%s).\n", $client->getErrorCode(), $client->getErrorMessage());
     return false;
   } else {
 
