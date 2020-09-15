@@ -6,10 +6,9 @@
 
 function protect($string)
 {
-  $string = trim(strip_tags(addslashes($string)));
-  return $string;
+    $string = trim(strip_tags(addslashes($string)));
+    return $string;
 }
-
 
 
 #JWT Verify Function
@@ -60,38 +59,36 @@ use Dapphp\Radius\Radius;
 
 function rjwtAuth($username, $password, $configLocation) #, $server, $secret, $nasIP, $nasID)
 {
+    date_default_timezone_set("America/Chicago");
+    $nbf = date('U');
 
-  date_default_timezone_set("America/Chicago");
-  $nbf = date('U');
-
-  // set server, secret, and basic attributes
+    // set server, secret, and basic attributes
   $rjwtConfig = parse_ini_file($configLocation); //Config File location
   $client = new Radius();
-  $client->setServer($rjwtConfig["serverIP"]) // RADIUS server address
+    $client->setServer($rjwtConfig["serverIP"]) // RADIUS server address
    ->setSecret($rjwtConfig["secret"]) // Server Secret
    ->setNasIpAddress($rjwtConfig["nasIPID"]) // NAS server address
    ->setAttribute(32, $rjwtConfig["nasID"]);  // NAS identifier
 
   // PAP authentication; returns true if successful, false otherwise
-  $authenticated = $client->accessRequest($username, $password);
+    $authenticated = $client->accessRequest($username, $password);
 
-  if ($authenticated === false) {
-    echo sprintf("Access-Request failed with error %d (%s).\n", $client->getErrorCode(), $client->getErrorMessage());
-    return false;
-  } else {
+    if ($authenticated === false) {
+        #echo sprintf("Access-Request failed with error %d (%s).\n", $client->getErrorCode(), $client->getErrorMessage());
+        return false;
+    } else {
+        $JWT_Payload_Array = array();
+        $JWT_Payload_Array['username'] = $username;
+        $JWT_Payload_Array['authenticated'] = $authenticated;
+        $JWT_Payload_Array['nbf'] = $nbf;
 
-    $JWT_Payload_Array = array();
-    $JWT_Payload_Array['username'] = $username;
-    $JWT_Payload_Array['authenticated'] = $authenticated;
-    $JWT_Payload_Array['nbf'] = $nbf;
+        $file = fopen($rjwtConfig['keyFile'], "r") or die("Unable to read key file!");
+        $ServerKey = fread($file, filesize($rjwtConfig['keyFile']));
+        fclose($file);
 
-    $file = fopen($rjwtConfig['keyFile'], "r") or die("Unable to read key file!");
-    $ServerKey = fread($file, filesize($rjwtConfig['keyFile']));
-    fclose($file);
+        $token = JWT::encode($JWT_Payload_Array, $ServerKey);
+        $_SESSION['jwt_token'] = $token;
 
-    $token = JWT::encode($JWT_Payload_Array, $ServerKey);
-    $_SESSION['jwt_token'] = $token;
-
-    return true;
-  }
+        return true;
+    }
 }
