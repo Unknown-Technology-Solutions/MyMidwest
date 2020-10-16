@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "Deleting previous test from Testing"
+rm -rf /var/www/testing
+mkdir -p /var/www/testing
+
+echo "Moving files to Testing"
+cp /root/tmp/bb-worker/worker/runtests/build/*.html    /var/www/testing
+cp /root/tmp/bb-worker/worker/runtests/build/*.php     /var/www/testing
+cp /root/tmp/bb-worker/worker/runtests/build/.htaccess /var/www/testing
+
+echo "Re-owning files"
+chown -R apache. /var/www/testing
+
+echo "Reseting MMW Testing databases"
+#CLEAR DB HERE
+#APPPLY DEFAULTS
+
+echo "Finished!"
+exit 0
