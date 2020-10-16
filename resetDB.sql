@@ -33,3 +33,6 @@ CREATE TABLE posts (
 INSERT INTO users (username, password, firstName, lastName, company) VALUES 
 	("admin", "password", "Admin", "Istrator", "Unknown Technology Solutions");
 
+INSERT INTO posts (title, author, submitDate, content, tags) VALUES 
+	("Test Post", "Admin", "10/16/2020", "This is a test post.", "test,admin,posting,testing");
+
