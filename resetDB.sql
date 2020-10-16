@@ -19,3 +19,17 @@ CREATE TABLE users (
 	company    VARCHAR(255) DEFAULT NULL
 );
 
+CREATE TABLE posts (
+	pid        INT UNSIGNED AUTO_INCREMENT NOT NULL UNIQUE KEY PRIMARY KEY,
+	title      VARCHAR(255) NOT NULL,
+	author     VARCHAR(255) NOT NULL,
+	submitDate VARCHAR(255) NOT NULL,
+	content    VARCHAR(2048) NOT NULL,
+	tags       VARCHAR(255) DEFAULT NULL
+);
+
+-- Insert defaults into tables
+
+INSERT INTO users (username, password, firstName, lastName, company) VALUES 
+	("admin", "password", "Admin", "Istrator", "Unknown Technology Solutions");
+
