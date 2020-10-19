@@ -12,7 +12,7 @@ cp /root/tmp/bb-worker/worker/runtests/build/*.php     /var/www/testing
 cp /root/tmp/bb-worker/worker/runtests/build/.htaccess /var/www/testing
 
 echo "Re-owning files"
-touch /var/www/testing/output.tab
+#touch /var/www/testing/output.tab
 chown -R apache. /var/www/testing
 
 echo "Reseting MMW Testing databases"
