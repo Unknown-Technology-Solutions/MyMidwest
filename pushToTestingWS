@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WORKING_DIR=/root/tmp/bb-worker/worker/runtests/build
+
 echo "Deleting previous test from Testing"
 rm -rf /var/www/testing
 mkdir -p /var/www/testing
@@ -16,7 +18,8 @@ chown -R apache. /var/www/testing
 echo "Reseting MMW Testing databases"
 echo $MSQL_UNAME
 echo $MSQL_PASS
-#mysqld --user=$MSQL_UNAME --password=$MSQL_PASS < resetDB.sql > /var/www/testing/output.tab
+echo $WORKING_DIR/resetDB.sql
+#mysqld --user=$MSQL_UNAME --password=$MSQL_PASS < $WORKING_DIR/resetDB.sql > /var/www/testing/output.tab
 
 echo "Finished!"
 exit 0
