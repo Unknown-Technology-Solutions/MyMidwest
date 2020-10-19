@@ -16,10 +16,10 @@ touch /var/www/testing/output.tab
 chown -R apache. /var/www/testing
 
 echo "Reseting MMW Testing databases"
-echo $MSQL_UNAME
-echo $MSQL_PASS
-echo $WORKING_DIR/resetDB.sql
-#mysqld --user=$MSQL_UNAME --password=$MSQL_PASS < $WORKING_DIR/resetDB.sql > /var/www/testing/output.tab
+#echo $MSQL_UNAME
+#echo $MSQL_PASS
+#echo $WORKING_DIR/resetDB.sql
+mysqld --user=$MSQL_UNAME --password=$MSQL_PASS < $WORKING_DIR/resetDB.sql > /var/www/testing/output.tab
 
 echo "Finished!"
 exit 0
