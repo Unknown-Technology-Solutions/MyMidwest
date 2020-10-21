@@ -7,9 +7,11 @@ rm -rf /var/www/testing
 mkdir -p /var/www/testing
 
 echo "Moving files to Testing"
-cp /root/tmp/bb-worker/worker/runtests/build/*.html    /var/www/testing
-cp /root/tmp/bb-worker/worker/runtests/build/*.php     /var/www/testing
-cp /root/tmp/bb-worker/worker/runtests/build/.htaccess /var/www/testing
+cp $WORKING_DIR/*.html    /var/www/testing
+cp $WORKING_DIR/*.php     /var/www/testing
+cp $WORKING_DIR/.htaccess /var/www/testing
+cp -R $WORKING_DIR/data /var/www/testing
+
 
 echo "Re-owning files"
 #touch /var/www/testing/output.tab
