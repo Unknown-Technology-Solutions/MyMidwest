@@ -7,3 +7,5 @@
    * Read login information
    * Write posts
    * Write users
+2. Write code to connect to the RJWT authenticator
+   * See Unknown-Technology-Solutions/RJWT
