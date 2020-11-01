@@ -14,3 +14,7 @@ Testing Site : http://testing.mymidwest.cf
 ---
 
 Here is a link to our Product Work trello board: https://trello.com/b/8WAOMywC
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FUnknown-Technology-Solutions%2FMyMidwest.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FUnknown-Technology-Solutions%2FMyMidwest?ref=badge_large)
